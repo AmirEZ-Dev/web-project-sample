@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صفحه ثبت‌نام</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #079c8d, #40063e);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .signup-container {
+        background-color: #0ba0f6;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        color: #051528;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #357ab7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-container">
+      <h2>ثبت‌نام</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="email">ایمیل:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">رمز عبور:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit">ثبت نام</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    document
+      .getElementById("registerForm")
+      .addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const response = await fetch("http://localhost:8000/signUp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        console.log(response);
+        if (response.ok) {
+          alert("Registered successfully!");
+          const tokenResponse = await fetch("http://localhost:8000/token", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          if (tokenResponse.ok) {
+            const tokenData = await tokenResponse.json();
+            const token = tokenData.Authorization;
+            localStorage.setItem("authToken", token);
+            window.location.href = "/home";
+          } else {
+            alert("can`t take token");
+          }
+        } else {
+          alert("Registration failed!");
+        }
+      });
+  </script>
+</html>

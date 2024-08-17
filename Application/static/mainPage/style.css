@@ -1,0 +1,84 @@
+/* استایل کلی بدن صفحه */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #079c8d, #40063e);
+  color: #fff;
+}
+
+/* استایل برای container اصلی */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* استایل برای header */
+header {
+  background: #333;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #ffeb3b;
+}
+
+/* استایل برای main section */
+main {
+  padding: 20px;
+}
+
+/* استایل برای بخش خوشامد */
+.welcome-section {
+  background: #e91e63;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.welcome-section h2 {
+  margin: 0;
+  font-size: 2em;
+}
+
+.welcome-section p {
+  font-size: 1.2em;
+}
+
+/* استایل برای دکمه‌ها */
+.button {
+  display: inline-block;
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 1em;
+  color: #fff;
+  background: #00bcd4;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #0097a7;
+}
+
+/* استایل برای footer */
+footer {
+  background: #333;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+footer p {
+  margin: 0;
+  color: #ffeb3b;
+  font-size: 1em;
+}

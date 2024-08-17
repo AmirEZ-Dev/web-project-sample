@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../../static/signInPage/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>ورود</h2>
+      <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+        <button type="submit">ورود</button>
+      </form>
+      <p>آیا ثبت نام نکرده اید ؟<a href="/signUp"> ثبت نام </a></p>
+    </div>
+  </body>
+  <script>
+    document
+      .getElementById("loginForm")
+      .addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        fetch("http://localhost:8000/signIn", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.authToken) {
+              localStorage.setItem("authToken", data.authToken);
+              window.location.href = "/home";
+            } else {
+              alert(
+                "Your email or password is incorrect. Please enter the correct email and password"
+              );
+              window.location.href = "/signIn";
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            alert(
+              "The server cannot process your request. Please try again later"
+            );
+            window.location.href = "/signIn";
+          });
+      });
+  </script>
+</html>
