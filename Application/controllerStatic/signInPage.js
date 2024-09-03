@@ -17,17 +17,3 @@ export async function handleSignInCss(req, res) {
     res.end();
   }
 }
-export async function handleSignInJs(req, res) {
-  try {
-    const filePath = path.join(__dirname, "../static/signInPage/script.js");
-    const data = await readFile(filePath);
-    res.writeHead(200, { "Content-Type": "text/javascript" });
-    res.write(data);
-    res.end();
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.writeHead(500, { "Content-Type": "text/plain" });
-    res.write("Internal Server Error");
-    res.end();
-  }
-}

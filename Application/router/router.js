@@ -19,7 +19,7 @@ export default async function router(req, res) {
           controlhomePageFunc(req, res);
           break;
         case "/signIn":
-          controlSignInPage.controlSignInPageFunc(req, res);
+          controlSignInPage.getSignIn(req, res);
           break;
         case "/signUp":
           controlSignUpPageFunc(req, res);
@@ -39,7 +39,7 @@ export default async function router(req, res) {
           controlSignUpPageFunc(req, res);
           break;
         case "/signIn":
-          controlSignInPage.controlSignInPost(req, res);
+          controlSignInPage.postSignIn(req, res);
           break;
         case "/token":
           token(req, res);
