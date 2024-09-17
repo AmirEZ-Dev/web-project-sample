@@ -1,4 +1,4 @@
-import readFile from "../services/readFileService/readFile.js";
+import readFile from "../services/file/readFile.js";
 import { fileURLToPath } from "url";
 import path from "path";
 

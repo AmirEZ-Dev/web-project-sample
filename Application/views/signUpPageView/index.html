@@ -91,29 +91,22 @@
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        const response = await fetch("http://localhost:8000/signUp", {
+        const fetchSignUp = await fetch("http://localhost:8000/signUp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         });
-        console.log(response);
-        if (response.ok) {
-          alert("Registered successfully!");
-          const tokenResponse = await fetch("http://localhost:8000/token", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          });
-          if (tokenResponse.ok) {
-            const tokenData = await tokenResponse.json();
-            const token = tokenData.Authorization;
-            localStorage.setItem("authToken", token);
-            window.location.href = "/home";
-          } else {
-            alert("can`t take token");
-          }
+
+        if (fetchSignUp.ok) {
+          const responseData = await fetchSignUp.json();
+          alert("Registration was successful");
+          const token = responseData.token;
+          localStorage.setItem("authToken", token);
+          window.location.href = "/home";
         } else {
-          alert("Registration failed!");
+          alert(
+            "oops sorry , Email or password previously selected , choose another email and password !"
+          );
         }
       });
   </script>

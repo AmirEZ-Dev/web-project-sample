@@ -5,10 +5,10 @@ function navigateTo(path) {
       window.alert("برای رفتن به صفحه خانه ابتدا باید احراز هویت بکنید");
       window.location.href = "/";
     } else {
-      fetch("http://localhost:8000/verifyToken", {
+      fetch("http://localhost:8000/authentication", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ authToken }),
+        body: JSON.stringify({ token: authToken }),
       })
         .then((response) => {
           if (response.status === 200) {

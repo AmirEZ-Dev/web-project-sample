@@ -1,8 +1,5 @@
 import http from "http";
-import dotenv from "dotenv";
-import check from "./services/checkURL/checkURL.js";
-import { setInterval } from "timers/promises";
-dotenv.config();
+import checkURL from "./services/URL/checkURL.js";
 
 export default function startApplication() {
   const port = process.env.PORT ?? 8080;
@@ -10,7 +7,7 @@ export default function startApplication() {
   try {
     const server = http.createServer((req, res) => {
       try {
-        check(req.url, req, res);
+        checkURL(req.url, req, res);
       } catch (error) {
         console.trace();
         console.error("Request error:", error.message);

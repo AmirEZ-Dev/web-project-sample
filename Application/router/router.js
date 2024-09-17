@@ -1,64 +1,53 @@
-import controlMainPage from "../controller/mainPage.js";
-import controlSignInPage from "../controller/signInPage.js";
-import controlhomePageFunc from "../controller/homePage.js";
-import controlSignUpPageFunc from "../controller/signUpPage.js";
-import token from "../controller/token.js";
-import verifyToken from "../controller/verifyToken.js";
+import mainPageController from "../controller/mainPage.js";
+import signInPageController from "../controller/signInPage.js";
+import homePageController from "../controller/homePage.js";
+import signUpPageController from "../controller/signUpPage.js";
+import authenticationController from "../controller/authentication.js";
 
 export default async function router(req, res) {
-  console.log("Requested URL : ", req.url);
-  console.log("request method : ", req.method);
-
+  console.log(req.method, req.url);
   try {
     if (req.method === "GET") {
       switch (req.url) {
         case "/":
-          controlMainPage.controlMainPageFunc(req, res);
+          mainPageController.sendMainPage(req, res);
           break;
         case "/home":
-          controlhomePageFunc(req, res);
+          homePageController.sendHomePage(req, res);
           break;
         case "/signIn":
-          controlSignInPage.getSignIn(req, res);
+          signInPageController.sendSignInPage(req, res);
           break;
         case "/signUp":
-          controlSignUpPageFunc(req, res);
+          signUpPageController.sendSignUpPage(req, res);
           break;
-
         default:
           res.writeHead(404, { "Content-Type": "text/plain" });
-          res.write(`${req.url} not found`);
-          res.end();
-
+          res.end(`${req.url} not found`);
           break;
       }
     }
     if (req.method === "POST") {
       switch (req.url) {
         case "/signUp":
-          controlSignUpPageFunc(req, res);
+          signUpPageController.registerUser(req, res);
           break;
         case "/signIn":
-          controlSignInPage.postSignIn(req, res);
+          signInPageController.signInUser(req, res);
           break;
-        case "/token":
-          token(req, res);
-          break;
-        case "/verifyToken":
-          verifyToken(req, res);
+        case "/authentication":
+          authenticationController.verify(req, res);
           break;
         default:
           res.writeHead(404, { "Content-Type": "text/plain" });
-          res.write(`${req.url} not found`);
-          res.end();
+          res.end(`${req.url} not found`);
           break;
       }
     }
   } catch (error) {
     console.error("Router error:", error.message);
     console.trace();
-    res.writeHead(500, { "Content-Type": "text/plain" });
-    res.write("Internal Server Error");
-    res.end();
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("The requested resource was not found");
   }
 }
