@@ -1,8 +1,8 @@
-import mainPageController from "../controller/mainPage.js";
-import signInPageController from "../controller/signInPage.js";
-import homePageController from "../controller/homePage.js";
-import signUpPageController from "../controller/signUpPage.js";
 import authenticationController from "../controller/authentication.js";
+import homeController from "../controller/home.js";
+import mainController from "../controller/main.js";
+import signInController from "../controller/signIn.js";
+import signUpController from "../controller/signUp.js";
 
 export default async function router(req, res) {
   console.log(req.method, req.url);
@@ -10,16 +10,16 @@ export default async function router(req, res) {
     if (req.method === "GET") {
       switch (req.url) {
         case "/":
-          mainPageController.sendMainPage(req, res);
+          mainController.sendMainPage(req, res);
           break;
         case "/home":
-          homePageController.sendHomePage(req, res);
+          homeController.sendHomePage(req, res);
           break;
         case "/signIn":
-          signInPageController.sendSignInPage(req, res);
+          signInController.sendSignInPage(req, res);
           break;
         case "/signUp":
-          signUpPageController.sendSignUpPage(req, res);
+          signUpController.sendSignUpPage(req, res);
           break;
         default:
           res.writeHead(404, { "Content-Type": "text/plain" });
@@ -30,10 +30,10 @@ export default async function router(req, res) {
     if (req.method === "POST") {
       switch (req.url) {
         case "/signUp":
-          signUpPageController.registerUser(req, res);
+          signUpController.registerUser(req, res);
           break;
         case "/signIn":
-          signInPageController.signInUser(req, res);
+          signInController.signInUser(req, res);
           break;
         case "/authentication":
           authenticationController.verify(req, res);

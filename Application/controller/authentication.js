@@ -1,21 +1,21 @@
-import verifyToken from "../services/token/verifyToken.js";
+import TokenManagement from "../services/Security/Encryption/TokenManagement.js";
+const tokenManagement = new TokenManagement();
 const verify = async function (req, res) {
   let body = "";
   try {
-    req.on("data", (data) => {
-      body += data;
+    req.on("data", (chunc) => {
+      body += chunc;
     });
     req.on("end", () => {
       const { token } = JSON.parse(body);
+      const verifyTokenResulte = tokenManagement.verifyToken(token);
 
-      const verifyResult = verifyToken(token);
-
-      if (verifyResult === true) {
+      if (verifyTokenResulte.status === true) {
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Your token is valid" }));
+        res.end(JSON.stringify({ message: verifyTokenResulte.message }));
       } else {
         res.writeHead(401, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ error: "Your token has expired" }));
+        res.end(JSON.stringify({ message: verifyTokenResulte.message }));
       }
     });
   } catch (error) {

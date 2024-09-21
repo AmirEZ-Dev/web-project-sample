@@ -96,16 +96,19 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         });
+        const responseData = await fetchSignUp.json();
 
-        if (fetchSignUp.ok) {
-          const responseData = await fetchSignUp.json();
-          alert("Registration was successful");
-          const token = responseData.token;
+        if (responseData.status === "successful") {
+          const token = responseData.authToken;
+
           localStorage.setItem("authToken", token);
           window.location.href = "/home";
+          alert(responseData.message);
         } else {
+          window.location.href = "/signUp";
           alert(
-            "oops sorry , Email or password previously selected , choose another email and password !"
+            responseData.message ||
+              "Registration failed: There is a user with this profile. Please enter another email"
           );
         }
       });
